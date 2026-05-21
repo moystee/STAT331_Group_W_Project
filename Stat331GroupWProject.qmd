@@ -22,14 +22,15 @@ editor: visual
 
 The dataset used in this lab contains germination data collected during a summer ecology study investigating the effects of fire retardants on grassland species. Specifically, the study examined how two fire retardants, Phos-Chek and Clore, influenced the germination of Purple Needle Grass (PNG) and Italian Ryegrass (RYE).
 
-For each observation, the number of seeds germinated out of 10 total seeds was recorded weekly over a four-week period. The dataset includes:
+For each observation, the number of seeds germinated out of 10 total seeds was recorded weekly over a four-week period. The dataset includes the following variables:
 
-- species
-- substrate type
-- treatment type
-- concentration
-- dish number
-- weekly germination counts
+- `week` – week of observation during the experiment
+- `species` – plant species being tested
+- `substrate` – substrate or soil type used
+- `treatment_type` – fire retardant treatment applied
+- `concentration` – concentration level of treatment
+- `dish_number` – petri dish identification number
+- `seeds_germinated_out_of_10` – number of seeds germinated out of 10 total seeds
 
 This dataset contains a large number of observations and multiple treatment combinations, that allows for practice with data visualization, summary statistics, iteration, functions, and simulation techniques using real-world ecological data.
 
