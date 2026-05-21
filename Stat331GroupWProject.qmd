@@ -48,7 +48,6 @@ germination <- clean_names(germination)
 ## Preview the Data
 ```{r}
 glimpse(germination)
-
 head(germination)
 ```
 
