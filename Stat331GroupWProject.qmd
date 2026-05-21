@@ -32,7 +32,7 @@ For each observation, the number of seeds germinated out of 10 total seeds was r
 - `dish_number` – petri dish identification number
 - `seeds_germinated_out_of_10` – number of seeds germinated out of 10 total seeds
 
-This dataset contains a large number of observations and multiple treatment combinations, that allows for practice with data visualization, summary statistics, iteration, functions, and simulation techniques using real-world ecological data.
+This dataset contains a large number of observations and multiple treatment combinations, that allows for practice with data visualization, summary statistics, iteration, functions, and simulation techniques.
 
 ## Read Data
 
