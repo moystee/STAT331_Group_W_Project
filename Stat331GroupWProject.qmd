@@ -4,6 +4,51 @@ format: html
 editor: visual
 ---
 
-## Data Set
+## Learning Objectives
 
-## 
+- Learn how to implement tidyverse functions using real-world ecological datasets and interpret their impact on germination patterns.
+
+- Create summary statistics and visualizations to compare germination rates across treatments, species, and environmental conditions.
+
+- Practice writing reusable R functions using tidy evaluation techniques such as the embrace operator (`{{ }}`).
+
+- Use iteration tools from the `purrr` package to efficiently repeat analyses across multiple treatment groups or variables.
+
+- Explore distributions, sampling, and simulation methods to better understand variability in germination percentages.
+
+- Practice writing reproducible and well-documented R code for ecological and plant biology data analysis.
+
+## Dataset Description
+
+The dataset used in this lab contains germination data collected during a summer ecology study investigating the effects of fire retardants on grassland species. Specifically, the study examined how two fire retardants, Phos-Chek and Clore, influenced the germination of Purple Needle Grass (PNG) and Italian Ryegrass (RYE).
+
+For each observation, the number of seeds germinated out of 10 total seeds was recorded weekly over a four-week period. The dataset includes:
+
+- species
+- substrate type
+- treatment type
+- concentration
+- dish number
+- weekly germination counts
+
+This dataset contains a large number of observations and multiple treatment combinations, that allows for practice with data visualization, summary statistics, iteration, functions, and simulation techniques using real-world ecological data.
+
+## Read Data
+
+```{r}
+#| message: false
+library(readxl)
+library(tidyverse)
+library(janitor)
+
+germination <- read_excel("Germination_Data_Entry_1.xlsx")
+germination <- clean_names(germination)
+```
+
+## Preview the Data
+```{r}
+glimpse(germination)
+
+head(germination)
+```
+
