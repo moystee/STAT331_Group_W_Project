@@ -87,3 +87,27 @@ not exactly the same in every case, but there appears to be a noticeable trend.
 
 These results suggest that both treatment type and concentration level may affect germination success, and that the
 treatments may affect each species differently.
+
+
+**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks**
+**Hint: There are 4 dishes for each concentration so the frequency should be out of 40**
+```{r}
+germination |> 
+  mutate(week=fct_recode(as.character(week),"Week 1"="1",
+                         "Week 2"="2",
+                         "Week 3"="3",
+                         "Week 4"="4")) |> 
+  group_by(week,treatment_type,concentration) |> 
+  summarise(freq=sum(seeds_germinated_out_of_10)/40,
+            .groups="drop") |> 
+  ggplot(mapping=aes(x=concentration,
+                     y=freq,
+                     color=treatment_type))+
+  geom_line()+
+  facet_wrap(~week)+
+  labs(title="Seeds Germination Rate Among Different Concentrations",
+       subtitle="Rate",
+       x="Conentration",
+       y="",
+       color="Treatment")
+```
