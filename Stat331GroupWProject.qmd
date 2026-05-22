@@ -111,3 +111,32 @@ germination |>
        y="",
        color="Treatment")
 ```
+
+**Question 3: Create a table using gt() that displays the mean germination for each species and fire retardant from week 4.**
+**Hint: there should be 3 columns and 4 rows.**
+```{r}
+germination |>
+  
+  filter(Week == 4) |>
+  
+  group_by(species, treatment_type) |>
+  
+  summarize(
+    mean_germination = mean(seeds_germinated_out_of_10, na.rm = TRUE),
+    .groups = "drop") |>
+  
+  gt() |>
+  
+  tab_header(
+    title = "Mean Germination at Week 4",
+    subtitle = "Grouped by Species and Fire Retardant Treatment") |>
+ 
+   fmt_number(
+    columns = mean_germination,
+    decimals = 3) |>
+  
+  cols_label(
+    species = "Species",
+    treatment_type = "Fire Retardant",
+    mean_germination = "Mean Germination (out of 10)")
+```
