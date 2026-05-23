@@ -43,6 +43,7 @@ library(readxl)
 library(tidyverse)
 library(janitor)
 library(knitr)
+library(gt)
 ```
 
 ## Read Data
@@ -117,7 +118,7 @@ germination |>
 ```{r}
 germination |>
   
-  filter(Week == 4) |>
+  filter(week == 4) |>
   
   group_by(species, treatment_type) |>
   
@@ -126,11 +127,10 @@ germination |>
     .groups = "drop") |>
   
   gt() |>
-  
   tab_header(
     title = "Mean Germination at Week 4",
     subtitle = "Grouped by Species and Fire Retardant Treatment") |>
- 
+  
    fmt_number(
     columns = mean_germination,
     decimals = 3) |>
