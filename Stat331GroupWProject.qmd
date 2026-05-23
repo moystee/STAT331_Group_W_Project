@@ -1,7 +1,18 @@
 ---
-title: "Stat331GroupWProject"
-format: html
-editor: visual
+title: "Group W Project: Germination Data Analysis"
+author: "Aarav, Carson, and Jared"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+    html-table-processing: none
+editor: source
+execute: 
+  error: true
+  echo: true
+  message: false
+  warning: false
 ---
 
 ## Learning Objectives
