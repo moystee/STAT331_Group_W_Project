@@ -102,7 +102,7 @@ treatments may affect each species differently.
 
 
 **Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks**
-**Hint: There are 4 dishes for each concentration so the frequency should be out of 40**
+**Hint: There are 4 dishes for each concentration so the frequency should be out of 40.**
 ```{r}
 germination |> 
   mutate(week=fct_recode(as.character(week),"Week 1"="1",
@@ -151,3 +151,74 @@ germination |>
     treatment_type = "Fire Retardant",
     mean_germination = "Mean Germination (out of 10)")
 ```
+
+**Question 4: Write a reusable function called `germination_success()` that calculates the percentage of observations where at least half of the seeds germinated. For this question, define a successful observation as one where at least 5 out of 10 seeds germinated. Use your function to calculate germination success percentages by species.** 
+
+Your function should:
+
+- use a grouping variable chosen by the user
+- use the embrace operator (`{{ }}`)
+- return the success percentage for each group
+
+```{r}
+germination_success <- function(data, var){
+  data |>
+    group_by({{ var }}) |>
+    summarize(
+      success_percent =
+        round(mean(seeds_germinated_out_of_10 >= 5) * 100, 2)
+    )
+}
+```
+
+```{r}
+germination_success(germination, species) |>
+  kable(caption = "Germination Success Percentage by Species")
+```
+The table shows the percentage of observations where at least 5 out of 10 seeds successfully germinated for each species. These results suggest that RYE generally germinated more successfully than PNG under the treatment conditions included in this dataset.
+
+**Question 5: Create a new variable called `germination_level`, then create a summary table showing the number of observations in each germination level for each species.**
+
+Classify the observations as:
+
+- Low: 0–3 seeds germinated
+- Moderate: 4–7 seeds germinated
+- High: 8–10 seeds germinated
+
+```{r}
+germination_levels <- germination |>
+  mutate(
+    germination_level = factor(
+      case_when(
+        seeds_germinated_out_of_10 <= 3 ~ "Low",
+        seeds_germinated_out_of_10 <= 7 ~ "Moderate",
+        seeds_germinated_out_of_10 <= 10 ~ "High"),
+      levels = c("Low", "Moderate", "High")
+    )
+  )
+germination_levels |>
+  group_by(species, germination_level) |>
+  summarize(
+    observations = n(),
+    .groups = "drop"
+  ) |>
+  kable(caption = "Observations by Germination Level and Species")
+```
+Most observations for both species were classified in the Low germination category, meaning that 0–3 seeds germinated in the majority of cases. These results also suggest that RYE generally had stronger germination outcomes than PNG under the treatment conditions included in this dataset.
+
+**Question 6: Use `map_dfr()` to count how many Low, Moderate, and High germination observations occurred in each week. Which week had the strongest germination performance?**
+
+```{r}
+week_levels <- map_dfr(
+  unique(germination_levels$week),
+  ~ germination_levels |>
+    filter(week == .x) |>
+    count(germination_level, name = "observations", .drop = FALSE) |>
+    mutate(week = .x)
+)
+
+week_levels |>
+  kable(caption = "Germination Levels by Week")
+```
+These results suggest that germination outcomes improved over time for some observations, with Week 3 showing the strongest overall germination performance since it had the most High observations with 5.
+
