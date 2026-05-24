@@ -206,18 +206,20 @@ germination_levels |>
 ```
 Most observations for both species were classified in the Low germination category, meaning that 0–3 seeds germinated in the majority of cases. These results also suggest that RYE generally had stronger germination outcomes than PNG under the treatment conditions included in this dataset.
 
-**Question 6: Use `map_dfr()` to count how many Low, Moderate, and High germination observations occurred in each week. Which week had the strongest germination performance?**
+**Question 6: Use `map()` to count how many Low, Moderate, and High germination observations occurred in each week. Which week had the strongest germination performance?**
 
 ```{r}
-week_levels <- map_dfr(
+week_levels <- map(
   unique(germination_levels$week),
   ~ germination_levels |>
     filter(week == .x) |>
-    count(germination_level, name = "observations", .drop = FALSE) |>
+    count(germination_level,
+          name = "observations",
+          .drop = FALSE) |>
     mutate(week = .x)
 )
 
-week_levels |>
+bind_rows(week_levels) |>
   kable(caption = "Germination Levels by Week")
 ```
 These results suggest that germination outcomes improved over time for some observations, with Week 3 showing the strongest overall germination performance since it had the most High observations with 5.
