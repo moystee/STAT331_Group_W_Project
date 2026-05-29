@@ -234,7 +234,8 @@ germination|>
   filter(treatment_type=="Clore") |> 
   group_by(treatment_type) |> 
   summarize(avg=mean(seeds_germinated_out_of_10),
-            sd=sd(seeds_germinated_out_of_10))
+            sd=sd(seeds_germinated_out_of_10)) |> 
+  kable()
 ```
 
 ```{r}
@@ -243,13 +244,35 @@ sim=data.frame(val=rnorm(c(1:1000),mean=1.34,sd=1.84))
 
 sim |> 
   ggplot(mapping = aes(x=val))+
-  geom_histogram()
+  geom_histogram()+
+  labs(title="Normal Distribution of Seeds Germinated 
+       for Clore Treatment",
+       x="Seeds Germinated",
+       y="Count")
 
 ```
 Based on the graph that was created and from the values of the mean and standard deviation, the graph wouldn't make sense for it to be made as a normal distribution. This is because the standard deviation is larger than mean and that could be based on varying some of the values were originally. So when this simulation was created using the values we attained, it doesn't look symmetric and instead is a bit off. 
 
-**Question 8: For each of the week and substrate, identify the number of seeds germinated/10 that occured the most make sure to format the the table with a title and good column labels**
+**Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table. Hint use the exact same frequency calculation you did for quetion 2.**
 ```{r}
+germination |> 
+  group_by(week,substrate,treatment_type) |> 
+  summarise(freq=sum(seeds_germinated_out_of_10)/40,
+            .groups="drop") |>
+  filter(freq==max(freq),.by=week) |> 
+  gt() |>
+  tab_caption(
+    caption = "Highest Mean Frequency of Seeds Germinated with Each Week") |>
+  
+   fmt_number(
+    columns = freq,
+    decimals = 1) |>
+  
+  cols_label(
+    freq = "Highest Seed Frequency",
+    substrate="Substrate",
+    treatment_type="Treatment",
+    week="Week")
 
 ```
 
