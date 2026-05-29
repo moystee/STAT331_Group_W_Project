@@ -252,3 +252,53 @@ Based on the graph that was created and from the values of the mean and standard
 ```{r}
 
 ```
+
+**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. (Hint: create a summary function, split the dataset by species, apply a summary function to each subset using a map function, then combine the results into a single tidy table)
+```{r}
+#Summary function:
+
+library(tidyverse)
+
+species_summary <- function(data) 
+{data |>
+    mutate(
+      germination_percent = (seeds_germinated_out_of_10 / 10) * 100) |>
+
+    summarize(
+      mean_germination = mean(germination_percent, na.rm = TRUE),
+      median_germination = median(germination_percent, na.rm = TRUE),
+      sd_germination = sd(germination_percent, na.rm = TRUE),
+      n = n())}
+
+#Splitting the data by species:
+
+species_list <- germination |>
+  split(~ species)
+
+#Applying the function to the species:
+
+species_results <- species_list |>
+
+  purrr::map_dfr(
+    species_summary,
+    .id = "species")
+
+species_results
+```
+This output should give a table showing the species, standard devaition of germination percentage, mean and median germination, as well as number of observations.
+
+**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate: (Hint: use group_split and map_dfr)
+```{r}
+
+grouped_data <- germination |>
+  group_by(species, substrate)
+
+results <- grouped_data |>
+  group_split() |>
+  purrr::map_dfr(species_summary)
+
+grouped_data |>
+  group_keys() |>
+  bind_cols(results)
+
+```
