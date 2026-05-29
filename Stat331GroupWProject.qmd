@@ -279,7 +279,7 @@ species_list <- germination |>
 
 species_results <- species_list |>
 
-  purrr::map_dfr(
+  map_dfr(
     species_summary,
     .id = "species")
 
@@ -295,7 +295,7 @@ grouped_data <- germination |>
 
 results <- grouped_data |>
   group_split() |>
-  purrr::map_dfr(species_summary)
+  map_dfr(species_summary)
 
 grouped_data |>
   group_keys() |>
