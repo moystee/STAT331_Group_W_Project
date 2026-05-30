@@ -228,7 +228,6 @@ These results suggest that germination outcomes improved over time for some obse
 
 **Question 7: Gather the mean and standard deviation of the seeds germinated for the treatment type Clore. With those create a simulation 1000 samples and graph that distribution. Does this graph makes sense to create why or why not?**
 
-
 ```{r}
 germination|> 
   filter(treatment_type=="Clore") |> 
@@ -254,6 +253,7 @@ sim |>
 Based on the graph that was created and from the values of the mean and standard deviation, the graph wouldn't make sense for it to be made as a normal distribution. This is because the standard deviation is larger than mean and that could be based on varying some of the values were originally. So when this simulation was created using the values we attained, it doesn't look symmetric and instead is a bit off. 
 
 **Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table. Hint use the exact same frequency calculation you did for quetion 2.**
+
 ```{r}
 germination |> 
   group_by(week,substrate,treatment_type) |> 
@@ -276,7 +276,8 @@ germination |>
 
 ```
 
-**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. (Hint: create a summary function, split the dataset by species, apply a summary function to each subset using a map function, then combine the results into a single tidy table)
+**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. (Hint: create a summary function, split the dataset by species, apply a summary function to each subset using a map function, then combine the results into a single tidy table)**
+
 ```{r}
 #Summary function:
 
@@ -304,13 +305,15 @@ species_results <- species_list |>
 
   map_dfr(
     species_summary,
-    .id = "species")
+    .id = "species") |>
+  kable()
 
 species_results
 ```
 This output should give a table showing the species, standard devaition of germination percentage, mean and median germination, as well as number of observations.
 
-**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate: (Hint: use group_split and map_dfr)
+**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate: (Hint: use group_split and map_dfr)**
+
 ```{r}
 
 grouped_data <- germination |>
@@ -322,6 +325,7 @@ results <- grouped_data |>
 
 grouped_data |>
   group_keys() |>
-  bind_cols(results)
+  bind_cols(results) |>
+  kable()
 
 ```
