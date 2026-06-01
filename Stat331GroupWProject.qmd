@@ -45,7 +45,29 @@ For each observation, the number of seeds germinated out of 10 total seeds was r
 
 This dataset contains a large number of observations and multiple treatment combinations, that allows for practice with data visualization, summary statistics, iteration, functions, and simulation techniques.
 
+## Download the Data
+
+Download the dataset for this lab: [Germination_Data_Entry_1.xlsx](Germination_Data_Entry_1.xlsx)
+
+Save this Excel sheet in your project folder before running the code in this lab.
+
 ## Import Libraries
+
+::: {.callout-note}
+## Note
+
+If you have not previously installed these packages, run:
+
+```r
+install.packages("readxl")
+install.packages("tidyverse")
+install.packages("janitor")
+install.packages("knitr")
+install.packages("gt")
+```
+
+in the Console once. After the packages are installed, you can load them in future sessions using `library()`.
+:::
 
 ```{r}
 #| message: false
@@ -59,12 +81,20 @@ library(gt)
 
 ## Read Data
 
+::: {.callout-warning}
+## Warning
+
+If you change the name of the dataset file, be sure to update the filename used in `read_excel()` below.
+:::
+
 ```{r}
 germination <- read_excel("Germination_Data_Entry_1.xlsx")
 germination <- clean_names(germination)
 ```
 
 ## Preview the Data
+
+The dataset contains 640 observations and 7 variables related to seed germination experiments. The output from `glimpse()` provides an overview of the variable names, data types, and some values, while `colSums(is.na())` confirms that there are no missing values in the dataset.
 
 ```{r}
 glimpse(germination)
@@ -91,9 +121,8 @@ treatment_summary |>
 ```{r}
 ggplot(treatment_summary,
        aes(x = treatment_type,
-           y = average_germination_percent,
-           fill = treatment_type)) +
-  geom_col() +
+           y = average_germination_percent)) +
+  geom_col(fill = "steelblue") +
   facet_wrap(~ species) +
   labs(
     title = "Average Germination Percentage by Treatment",
@@ -101,10 +130,11 @@ ggplot(treatment_summary,
     y = "Average Germination Percentage"
   )
 ```
-For PNG, the Clore treatment had a slightly higher average germination percentage than Phos. In contrast, RYE had a much higher germination percentage under the Phos treatment. The bar plot makes these differences easier to visualize by clearly showing how the treatments affected each species differently.
 
-**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks**
-**Hint: There are 4 dishes for each concentration so the frequency should be out of 40.**
+For PNG, the Clore treatment had a slightly higher average germination percentage than Phos. In contrast, RYE had a much higher germination percentage under the Phos treatment. The bar plot makes these differences easier to visualize by using the table values and displaying them side by side for each species.
+
+**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks** **Hint: There are 4 dishes for each concentration so the frequency should be out of 40.**
+
 ```{r}
 germination |> 
   mutate(week=fct_recode(as.character(week),"Week 1"="1",
@@ -126,8 +156,8 @@ germination |>
        color="Treatment")
 ```
 
-**Question 3: Create a table using gt() that displays the mean germination for each species and fire retardant from week 4.**
-**Hint: there should be 3 columns and 4 rows.**
+**Question 3: Create a table using gt() that displays the mean germination for each species and fire retardant from week 4.** **Hint: there should be 3 columns and 4 rows.**
+
 ```{r}
 germination |>
   
@@ -154,7 +184,7 @@ germination |>
     mean_germination = "Mean Germination (out of 10)")
 ```
 
-**Question 4: Write a reusable function called `germination_success()` that calculates the percentage of observations where at least half of the seeds germinated. For this question, define a successful observation as one where at least 5 out of 10 seeds germinated. Use your function to calculate germination success percentages by species.** 
+**Question 4: Write a reusable function called `germination_success()` that calculates the percentage of observations where at least half of the seeds germinated. For this question, define a successful observation as one where at least 5 out of 10 seeds germinated. Use your function to calculate germination success percentages by species.**
 
 Your function should:
 
@@ -177,9 +207,10 @@ germination_success <- function(data, var){
 germination_success(germination, species) |>
   kable(caption = "Germination Success Percentage by Species")
 ```
+
 The table shows the percentage of observations where at least 5 out of 10 seeds successfully germinated for each species. These results suggest that RYE generally germinated more successfully than PNG under the treatment conditions included in this dataset.
 
-**Question 5: Create a new variable called `germination_level`, then create a summary table showing the number of observations in each germination level for each species.**
+**Question 5: Create a new variable called `germination_levels`, then create a summary table showing the number of observations in each germination level for each species.**
 
 Classify the observations as:
 
@@ -206,6 +237,7 @@ germination_levels |>
   ) |>
   kable(caption = "Observations by Germination Level and Species")
 ```
+
 Most observations for both species were classified in the Low germination category, meaning that 0–3 seeds germinated in the majority of cases. These results also suggest that RYE generally had stronger germination outcomes than PNG under the treatment conditions included in this dataset.
 
 **Question 6: Use `map()` to count how many Low, Moderate, and High germination observations occurred in each week. Which week had the strongest germination performance?**
@@ -224,6 +256,7 @@ week_levels <- map(
 bind_rows(week_levels) |>
   kable(caption = "Germination Levels by Week")
 ```
+
 These results suggest that germination outcomes improved over time for some observations, with Week 3 showing the strongest overall germination performance since it had the most High observations with 5.
 
 **Question 7: Gather the mean and standard deviation of the seeds germinated for the treatment type Clore. With those create a simulation 1000 samples and graph that distribution. Does this graph makes sense to create why or why not?**
@@ -250,7 +283,8 @@ sim |>
        y="Count")
 
 ```
-Based on the graph that was created and from the values of the mean and standard deviation, the graph wouldn't make sense for it to be made as a normal distribution. This is because the standard deviation is larger than mean and that could be based on varying some of the values were originally. So when this simulation was created using the values we attained, it doesn't look symmetric and instead is a bit off. 
+
+Based on the graph that was created and from the values of the mean and standard deviation, the graph wouldn't make sense for it to be made as a normal distribution. This is because the standard deviation is larger than mean and that could be based on varying some of the values were originally. So when this simulation was created using the values we attained, it doesn't look symmetric and instead is a bit off.
 
 **Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table. Hint use the exact same frequency calculation you did for quetion 2.**
 
@@ -310,7 +344,8 @@ species_results <- species_list |>
 
 species_results
 ```
-This output should give a table showing the species, standard devaition of germination percentage, mean and median germination, as well as number of observations.
+
+This output should give a table showing the species, standard deviation of germination percentage, mean and median germination, as well as number of observations.
 
 **Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate: (Hint: use group_split and map_dfr)**
 
