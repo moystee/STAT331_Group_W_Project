@@ -242,6 +242,12 @@ Most observations for both species were classified in the Low germination catego
 
 **Question 6: Use `map()` to count how many Low, Moderate, and High germination observations occurred in each week. Which week had the strongest germination performance?**
 
+::: {.callout-note}
+## Note
+
+There are multiple ways to solve this problem. While this solution uses `map()` to practice iteration, you can achieve the same result using `group_by()` and `summarize()`. Try exploring an alternative solution on your own.
+:::
+
 ```{r}
 week_levels <- map(
   unique(germination_levels$week),
@@ -254,6 +260,10 @@ week_levels <- map(
 )
 
 bind_rows(week_levels) |>
+  pivot_wider(
+    names_from = germination_level,
+    values_from = observations
+  ) |>
   kable(caption = "Germination Levels by Week")
 ```
 
