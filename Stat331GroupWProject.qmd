@@ -1,5 +1,5 @@
 ---
-title: "Group W Project: Germination Data Analysis"
+title: "Germination Data Analysis Solutions"
 author: "Aarav, Carson, and Jared"
 format: 
   html:
@@ -17,17 +17,17 @@ execute:
 
 ## Learning Objectives
 
-- Learn how to implement tidyverse functions using real-world ecological datasets and interpret their impact on germination patterns.
+- Learn how to implement tidyverse functions to analyze and interpret real-world ecological germination data.
 
-- Create summary statistics and visualizations to compare germination rates across treatments, species, and environmental conditions.
+- Create summary statistics + visualizations to compare germination rates across treatments, species, concentrations, and environmental conditions.
 
 - Practice writing reusable R functions using tidy evaluation techniques such as the embrace operator (`{{ }}`).
 
 - Use iteration tools from the `purrr` package to efficiently repeat analyses across multiple treatment groups or variables.
 
-- Explore distributions, sampling, and simulation methods to better understand variability in germination percentages.
+- Explore distributions + simulation methods to better understand variability in germination outcomes.
 
-- Practice writing reproducible and well-documented R code for ecological and plant biology data analysis.
+- Practice writing reproducible, well-documented, + readable R code for ecological data analysis.
 
 ## Dataset Description
 
@@ -94,7 +94,15 @@ germination <- clean_names(germination)
 
 ## Preview the Data
 
-The dataset contains 640 observations and 7 variables related to seed germination experiments. The output from `glimpse()` provides an overview of the variable names, data types, and some values, while `colSums(is.na())` confirms that there are no missing values in the dataset.
+**Question 0: Let's first poke around and get a sense of the dataset. What is the number of observations and variables? Are there any missing values?**
+
+::: {.callout-tip}
+## Tip
+
+You can use `glimpse()` and `colSums(is.na())` to answer the question above!
+:::
+
+The dataset contains 640 observations and 7 variables related to seed germination experiments. The output from `glimpse()` provides an overview of the variable names, data types, and some values, while the output from `colSums(is.na())` confirms that there are no missing values in the dataset.
 
 ```{r}
 glimpse(germination)
@@ -133,7 +141,7 @@ ggplot(treatment_summary,
 
 For PNG, the Clore treatment had a slightly higher average germination percentage than Phos. In contrast, RYE had a much higher germination percentage under the Phos treatment. The bar plot makes these differences easier to visualize by using the table values and displaying them side by side for each species.
 
-**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks** **Hint: There are 4 dishes for each concentration so the frequency should be out of 40.**
+**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks.** **Hint: There are 4 dishes for each concentration so the frequency should be out of 40.**
 
 ```{r}
 germination |> 
@@ -245,7 +253,7 @@ Most observations for both species were classified in the Low germination catego
 ::: {.callout-note}
 ## Note
 
-There are multiple ways to solve this problem. While this solution uses `map()` to practice iteration, you can achieve the same result using `group_by()` and `summarize()`. Try exploring an alternative solution on your own.
+There are multiple ways to solve this problem. While this solution uses `map()` to practice iteration, you can achieve the same result using `group_by()` and `summarize()`. You may try exploring an alternative solution on your own.
 :::
 
 ```{r}
@@ -269,7 +277,7 @@ bind_rows(week_levels) |>
 
 These results suggest that germination outcomes improved over time for some observations, with Week 3 showing the strongest overall germination performance since it had the most High observations with 5.
 
-**Question 7: Gather the mean and standard deviation of the seeds germinated for the treatment type Clore. With those create a simulation 1000 samples and graph that distribution. Does this graph makes sense to create why or why not?**
+**Question 7: Gather the mean and standard deviation of the seeds germinated for the treatment type Clore. With those, create a simulation 1000 samples and graph that distribution. Does this graph makes sense to create why or why not?**
 
 ```{r}
 germination|> 
@@ -296,7 +304,7 @@ sim |>
 
 Based on the graph that was created and from the values of the mean and standard deviation, the graph wouldn't make sense for it to be made as a normal distribution. This is because the standard deviation is larger than mean and that could be based on varying some of the values were originally. So when this simulation was created using the values we attained, it doesn't look symmetric and instead is a bit off.
 
-**Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table. Hint use the exact same frequency calculation you did for quetion 2.**
+**Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table. Hint: use the same frequency calculation you did for question 2.**
 
 ```{r}
 germination |> 
@@ -320,7 +328,7 @@ germination |>
 
 ```
 
-**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. (Hint: create a summary function, split the dataset by species, apply a summary function to each subset using a map function, then combine the results into a single tidy table)**
+**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. Hint: create a summary function, split the dataset by species, apply a summary function to each subset using a map function, then combine the results into a single tidy table.**
 
 ```{r}
 #Summary function:
@@ -357,7 +365,7 @@ species_results
 
 This output should give a table showing the species, standard deviation of germination percentage, mean and median germination, as well as number of observations.
 
-**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate: (Hint: use group_split and map_dfr)**
+**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate. Hint: use group_split and map_dfr.**
 
 ```{r}
 
