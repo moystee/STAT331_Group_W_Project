@@ -328,7 +328,7 @@ germination |>
 
 ```
 
-**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. Hint: create a summary function, split the dataset by species, apply a summary function to each subset using a map function, then combine the results into a single tidy table.**
+**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. Hint: create a summary function, summarize the dataset using nest(), apply a summary function to each subset using a map function, then combine the results into a single tidy table.**
 
 ```{r}
 #Summary function:
@@ -337,6 +337,7 @@ library(tidyverse)
 
 species_summary <- function(data) 
 {data |>
+
     mutate(
       germination_percent = (seeds_germinated_out_of_10 / 10) * 100) |>
 
@@ -346,39 +347,37 @@ species_summary <- function(data)
       sd_germination = sd(germination_percent, na.rm = TRUE),
       n = n())}
 
-#Splitting the data by species:
+# Nest by species and apply summary function:
 
-species_list <- germination |>
-  split(~ species)
+species_results <- germination |>
 
-#Applying the function to the species:
+  nest(data = -species) |>
 
-species_results <- species_list |>
+  mutate(summary = map(data, species_summary)) |>
 
-  map_dfr(
-    species_summary,
-    .id = "species") |>
+  select(-data) |>
+
+  unnest(summary)
+
+species_results |>
+
   kable()
-
-species_results
 ```
 
-This output should give a table showing the species, standard deviation of germination percentage, mean and median germination, as well as number of observations.
+This output should give a table with one row per species showing standard deviation of germination percentage, mean and median germination, as well as number of observations.
 
-**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate. Hint: use group_split and map_dfr.**
+**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate. Hint: use nest() and unnest().**
 
 ```{r}
 
-grouped_data <- germination |>
-  group_by(species, substrate)
+results <- germination |>
+  nest(data = c(-species, -substrate)) |>
+  mutate(summary = map(data, species_summary)) |>
+  select(-data) |>
+  unnest(summary)
 
-results <- grouped_data |>
-  group_split() |>
-  map_dfr(species_summary)
-
-grouped_data |>
-  group_keys() |>
-  bind_cols(results) |>
+results |>
   kable()
 
 ```
+This output should give a table with 4 rows (each species/substrate combination) showing standard deviation of germination percentage, mean and median germination, as well as number of observations.
