@@ -1,6 +1,6 @@
 ---
 title: "Germination Data Analysis Student Version"
-author: "Aarav, Carson, and Jared"
+author: "YOUR NAME"
 format: 
   html:
     embed-resources: true
@@ -15,23 +15,208 @@ execute:
   warning: false
 ---
 
-## Quarto
+## Learning Objectives
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+- Learn how to implement tidyverse functions to analyze and interpret real-world ecological germination data.
 
-## Running Code
+- Create summary statistics + visualizations to compare germination rates across treatments, species, concentrations, and environmental conditions.
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+- Practice writing reusable R functions using tidy evaluation techniques such as the embrace operator (`{{ }}`).
 
-```{r}
-1 + 1
+- Use iteration tools from the `purrr` package to efficiently repeat analyses across multiple treatment groups or variables.
+
+- Explore distributions + simulation methods to better understand variability in germination outcomes.
+
+- Practice writing reproducible, well-documented, + readable R code for ecological data analysis.
+
+## Dataset Description
+
+The dataset used in this lab contains germination data collected during a 2025 summer ecology study from Carson investigating the effects of fire retardants on grassland species. Specifically, the study examined how two fire retardants, Phos-Chek and Clore, influenced the germination of Purple Needle Grass (PNG) and Italian Ryegrass (RYE).
+
+For each observation, the number of seeds germinated out of 10 total seeds was recorded weekly over a four-week period. The dataset includes the following variables:
+
+- `week` – week of observation during the experiment
+- `species` – plant species being tested
+- `substrate` – substrate or soil type used
+- `treatment_type` – fire retardant treatment applied
+- `concentration` – concentration level of treatment
+- `dish_number` – petri dish identification number
+- `seeds_germinated_out_of_10` – number of seeds germinated out of 10 total seeds
+
+This dataset contains a large number of observations and multiple treatment combinations, that allows for practice with data visualization, summary statistics, iteration, functions, and simulation techniques.
+
+## Download the Data
+
+Download the dataset for this lab: [Germination_Data_Entry_1.xlsx](Germination_Data_Entry_1.xlsx)
+
+Save this Excel sheet in your project folder before running the code in this lab.
+
+## Import Libraries
+
+::: {.callout-note}
+## Note
+
+If you have not previously installed these packages, run:
+
+```r
+install.packages("readxl")
+install.packages("tidyverse")
+install.packages("janitor")
+install.packages("knitr")
+install.packages("gt")
 ```
 
-You can add options to executable code like this
+in the Console once. After the packages are installed, you can load them in future sessions using `library()`.
+:::
 
 ```{r}
-#| echo: false
-2 * 2
+#| message: false
+# Import your libraries here
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Read Data
+
+::: {.callout-warning}
+## Warning
+
+If you change the name of the dataset file, be sure to update the filename used in `read_excel()` below.
+:::
+
+```{r}
+#| message: false
+germination <- read_excel("Germination_Data_Entry_1.xlsx")
+germination <- clean_names(germination)
+```
+
+## Preview the Data
+
+**Question 0: Let's first poke around and get a sense of the dataset. What is the number of observations and variables? Are there any missing values?**
+
+::: {.callout-tip}
+## Tip
+
+You can use `glimpse()` and `colSums(is.na())` to answer the question above!
+:::
+
+Write a short description here.
+
+```{r}
+# Add your code here
+```
+
+## Questions
+
+**Question 1: Which treatment type had the highest average germination percentage for each species? Create a summary table and display the relationship between treatment type and average germination percentage using a bar plot.**
+
+```{r}
+# Add your table code here
+```
+
+```{r}
+# Add your bar plot code here
+```
+
+Write a short description here.
+
+**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks.** **Hint: There are 4 dishes for each concentration so the frequency should be out of 40.**
+
+```{r}
+# Add your graph code here
+```
+
+**Question 3: Create a table using gt() that displays the mean germination for each species and fire retardant from week 4.** **Hint: there should be 3 columns and 4 rows.**
+
+```{r}
+# Add your table code here
+```
+
+**Question 4: Write a reusable function called `germination_success()` that calculates the percentage of observations where at least half of the seeds germinated. For this question, define a successful observation as one where at least 5 out of 10 seeds germinated. Use your function to calculate germination success percentages by species.**
+
+Your function should:
+
+- use a grouping variable chosen by the user
+- use the embrace operator (`{{ }}`)
+- return the success percentage for each group
+
+```{r}
+germination_success <- function(data, var){
+  # add your function code here
+}
+```
+
+```{r}
+# Add your function test code here
+```
+
+Write a short description here.
+
+**Question 5: Create a new variable called `germination_levels`, then create a summary table showing the number of observations in each germination level for each species.**
+
+Classify the observations as:
+
+- Low: 0–3 seeds germinated
+- Moderate: 4–7 seeds germinated
+- High: 8–10 seeds germinated
+
+```{r}
+# Add your table code here
+```
+
+Write a short description here.
+
+**Question 6: Use `map()` to count how many Low, Moderate, and High germination observations occurred in each week. Which week had the strongest germination performance?**
+
+::: {.callout-note}
+## Note
+
+There are multiple ways to solve this problem. While this solution uses `map()` to practice iteration, you can achieve the same result using `group_by()` and `summarize()`. You may try exploring an alternative solution on your own.
+:::
+
+```{r}
+# Add your table code here
+```
+
+Write a short description here.
+
+**Question 7: Gather the mean and standard deviation of the seeds germinated for the treatment type Clore. With those, create a simulation 1000 samples and graph the distribution. Does this graph makes sense to create, why or why not?**
+
+```{r}
+# Add your table code here
+```
+
+```{r}
+set.seed(3452)
+
+# Add your distribution code here
+```
+
+**Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table. Hint: use the same frequency calculation you did for question 2.**
+
+```{r}
+# Add your table code here
+
+```
+
+**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. Hint: create a summary function, summarize the dataset using nest(), apply a summary function to each subset using a map function, then combine the results into a single tidy table.**
+
+```{r}
+#Summary function:
+
+species_summary <- function(data) {
+  # Add your function code here
+}
+
+# Nest by species and apply summary function:
+
+# Add your table code here
+```
+
+Write a short description of your table here.
+
+**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate. Hint: use nest() and unnest().**
+
+```{r}
+# Add your table code here
+```
+
+Write a short description of your table here.
