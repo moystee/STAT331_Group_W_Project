@@ -124,7 +124,7 @@ Write a short description here.
 # Add your graph code here
 ```
 
-**Question 3: Create a table using gt() that displays the mean germination for each species and fire retardant from week 4.** **Hint: there should be 3 columns and 4 rows.**
+**Question 3: Create a table using `gt()` that displays the mean germination for each species and fire retardant from week 4.** **Hint: there should be 3 columns and 4 rows.**
 
 ```{r}
 # Add your table code here
@@ -178,7 +178,7 @@ There are multiple ways to solve this problem. While this solution uses `map()` 
 
 Write a short description here.
 
-**Question 7: Gather the mean and standard deviation of the seeds germinated for the treatment type Clore. With those, create a simulation 1000 samples and graph the distribution. Does this graph makes sense to create, why or why not?**
+**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare that against original distribution. Use `set.seed(3452)`. Use functions `scale_fill_manual` and `after_stat(density)` within the histogram aesthetic.**
 
 ```{r}
 # Add your table code here
@@ -197,7 +197,7 @@ set.seed(3452)
 
 ```
 
-**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. Hint: create a summary function, summarize the dataset using nest(), apply a summary function to each subset using a map function, then combine the results into a single tidy table.**
+**Question 9: Use functions from the purrr package to calculate germination summaries separately for each species. Hint: create a summary function, summarize the dataset using `nest()`, apply a summary function to each subset using a map function, then combine the results into a single tidy table.**
 
 ```{r}
 #Summary function:
@@ -213,7 +213,7 @@ species_summary <- function(data) {
 
 Write a short description of your table here.
 
-**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate. Hint: use nest() and unnest().**
+**Question 10: Building on the code from question 9, build a table that summarizes the data by BOTH species and substrate. Hint: use `nest()` and `unnest()`.**
 
 ```{r}
 # Add your table code here
