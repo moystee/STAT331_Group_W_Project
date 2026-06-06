@@ -118,7 +118,12 @@ Write a short description here.
 
 Write a short description here.
 
-**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks.** **Hint: There are 4 dishes for each concentration so the frequency should be out of 40.**
+**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks.** 
+
+::: {.callout-tip}
+Hint: There are 4 dishes for each concentration so the frequency should be out of 40.
+You also might need to mutate the 'week' variable so that it can be faceted
+:::
 
 ```{r}
 # Add your graph code here
@@ -178,7 +183,10 @@ There are multiple ways to solve this problem. While this solution uses `map()` 
 
 Write a short description here.
 
-**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare that against original distribution. Use `set.seed(3452)`. Use functions `scale_fill_manual` and `after_stat(density)` within the histogram aesthetic.**
+**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare that against original distribution.**
+::: {.callout-tip}
+Use `set.seed(3452)`. Use functions `scale_fill_manual` to separate and `after_stat(density)` within the histogram aesthetic.
+:::
 
 ```{r}
 # Add your table code here
