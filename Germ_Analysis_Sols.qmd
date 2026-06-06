@@ -141,7 +141,12 @@ ggplot(treatment_summary,
 
 For PNG, the Clore treatment had a slightly higher average germination percentage than Phos. In contrast, RYE had a much higher germination percentage under the Phos treatment. The bar plot makes these differences easier to visualize by using the table values and displaying them side by side for each species.
 
-**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks.** **Hint: There are 4 dishes for each concentration so the frequency should be out of 40.**
+**Question 2: Create a faceted line graph detailing the frequencies for seeds germinated between different concentrations. Lines should be separated by the treatment and it should be faceted by the weeks.** 
+
+::: {.callout-tip}
+Hint: There are 4 dishes for each concentration so the frequency should be out of 40.
+You also might need to mutate the 'week' variable so that it can be faceted
+:::
 
 ```{r}
 germination |> 
@@ -277,7 +282,11 @@ bind_rows(week_levels) |>
 
 These results suggest that germination outcomes improved over time for some observations, with Week 3 showing the strongest overall germination performance since it had the most High observations with 5.
 
-**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare that against original distribution. Use `set.seed(3452)`. Use functions `scale_fill_manual` and `after_stat(density)` within the histogram aesthetic.**
+**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare that against original distribution.**
+
+::: {.callout-tip}
+Use `set.seed(3452)`. Use functions `scale_fill_manual` to separate and `after_stat(density)` within the histogram aesthetic.
+:::
 
 ```{r}
 germination|>  
