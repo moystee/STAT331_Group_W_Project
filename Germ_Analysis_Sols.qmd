@@ -282,7 +282,7 @@ bind_rows(week_levels) |>
 
 These results suggest that germination outcomes improved over time for some observations, with Week 3 showing the strongest overall germination performance since it had the most High observations with 5.
 
-**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare that against original distribution.**
+**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare those two distributions.**
 
 ::: {.callout-tip}
 Use `set.seed(3452)`. Use functions `scale_fill_manual` to separate and `after_stat(density)` within the histogram aesthetic.
@@ -321,7 +321,11 @@ germination|>
 
 Comparing the normal distribution that was created using the mean and standard deviation values, there are multiple values outside of the range between specifically when noting that the amount of seeds germinated is only between 0 and 10. Because of that, the graph would be more discrete which a normal distribution can't capture. Another reason to note is the existence of negative values and how for a normal distribution the values are more symmetric towards the mean. However, based on actual distribution, most of the values are towards 0 and is a strong right-skewed distribution. 
 
-**Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table. Hint: use the same frequency calculation you did for question 2.**
+**Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table.**
+
+::: {.callout-tip}
+Hint: use the same frequency calculation you did for question 2.
+:::
 
 ```{r}
 germination |> 
@@ -349,8 +353,6 @@ germination |>
 
 ```{r}
 #Summary function:
-
-library(tidyverse)
 
 species_summary <- function(data) 
 {data |>
@@ -399,3 +401,6 @@ results |>
 ```
 
 This output should give a table with 4 rows (each species/substrate combination) showing the standard deviation of germination percentage, mean and median germination, as well as number of observations.
+
+Dataset collected by C. W. Sanzone in collaboration with B. Ingram-Eiser and Dr. S. Steinmaus, provided by C.W. Sanzone.
+

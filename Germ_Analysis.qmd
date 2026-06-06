@@ -183,7 +183,8 @@ There are multiple ways to solve this problem. While this solution uses `map()` 
 
 Write a short description here.
 
-**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare that against original distribution.**
+**Question 7: Gather the mean and standard deviation of the seeds germinated. With these, create a simulation 1000 samples and graph a normal distribution. Then, graph the true distribution of seeds germinated out of 10 based on the original data and graph it within the same normal distribution graph. Compare those two distributions.**
+
 ::: {.callout-tip}
 Use `set.seed(3452)`. Use functions `scale_fill_manual` to separate and `after_stat(density)` within the histogram aesthetic.
 :::
@@ -198,7 +199,11 @@ set.seed(3452)
 # Add your distribution code here
 ```
 
-**Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table. Hint: use the same frequency calculation you did for question 2.**
+**Question 8: For each of the week, substrate and treatment find the frequency of seeds germinated/10, and identify the highest frequency for each week and make sure to format the the table with a caption for the table.**
+
+::: {.callout-tip}
+Hint: use the same frequency calculation you did for question 2.
+:::
 
 ```{r}
 # Add your table code here
@@ -228,3 +233,6 @@ Write a short description of your table here.
 ```
 
 Write a short description of your table here.
+
+Dataset collected by C. W. Sanzone in collaboration with B. Ingram-Eiser and Dr. S. Steinmaus, provided by C.W. Sanzone.
+
